@@ -1,0 +1,10 @@
+target/
+.git/
+.gitignore
+.idea/
+*.iml
+*.log
+.vscode/
+docker-data/
+README.md
+PROJECT_REPORT.md

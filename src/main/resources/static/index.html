@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps CI/CD Pipeline Dashboard | Automated Software Delivery</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <span class="logo-icon">🚀</span>
+            <div class="brand-text">
+                <h1>DevOps Mini Project</h1>
+                <span class="subtitle">Automated CI/CD Pipeline with Docker &amp; GitHub Actions</span>
+            </div>
+        </div>
+        <div class="nav-badges">
+            <span id="badge-status" class="badge badge-success"><span class="dot"></span> System UP</span>
+            <span id="badge-env" class="badge badge-info">Local / H2</span>
+            <span id="badge-version" class="badge badge-secondary">v1.0.0</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Hero / Project Summary -->
+        <section class="hero-card">
+            <div class="hero-content">
+                <h2>End-to-End Automated Software Delivery</h2>
+                <p>
+                    A structured demonstration connecting Git source control, automated Maven testing, 
+                    Docker multi-stage containerization, and continuous deployment verification via GitHub Actions.
+                </p>
+                <div class="hero-links">
+                    <a href="#pipeline-section" class="btn btn-primary">View Pipeline</a>
+                    <a href="/actuator/health" target="_blank" class="btn btn-outline">Spring Actuator</a>
+                    <a href="/api/health" target="_blank" class="btn btn-outline">Health API (JSON)</a>
+                    <a href="/h2-console" target="_blank" class="btn btn-outline">H2 DB Console</a>
+                </div>
+            </div>
+            <div class="hero-metrics">
+                <div class="metric-box">
+                    <span class="metric-label">Application Status</span>
+                    <span class="metric-val text-success" id="metric-health">UP</span>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-label">Server Uptime</span>
+                    <span class="metric-val" id="metric-uptime">0s</span>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-label">JVM Version</span>
+                    <span class="metric-val" id="metric-java">21</span>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-label">Docker Container</span>
+                    <span class="metric-val" id="metric-docker">Detecting...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 05: Visual End-to-End Workflow Section -->
+        <section class="section" id="pipeline-section">
+            <div class="section-header">
+                <h3>05 | System Architecture &amp; Workflow Pipeline</h3>
+                <p>Reproducing the 6-stage lifecycle from code commit to deployment verification.</p>
+            </div>
+            <div class="pipeline-grid">
+                <div class="stage-card active">
+                    <div class="stage-num">01</div>
+                    <div class="stage-icon">💻</div>
+                    <h4>Develop</h4>
+                    <p>Spring Boot 3, REST APIs, JPA entities, JUnit 5 test suites.</p>
+                    <span class="stage-tag">Git</span>
+                </div>
+                <div class="stage-arrow">➔</div>
+
+                <div class="stage-card active">
+                    <div class="stage-num">02</div>
+                    <div class="stage-icon">🐙</div>
+                    <h4>Push Code</h4>
+                    <p>Trigger CI/CD on push or pull request to main branch.</p>
+                    <span class="stage-tag">GitHub</span>
+                </div>
+                <div class="stage-arrow">➔</div>
+
+                <div class="stage-card active">
+                    <div class="stage-num">03</div>
+                    <div class="stage-icon">⚡</div>
+                    <h4>Build &amp; Test</h4>
+                    <p>Automated Maven compile, JUnit test runner, code validation.</p>
+                    <span class="stage-tag">Maven + JUnit</span>
+                </div>
+                <div class="stage-arrow">➔</div>
+
+                <div class="stage-card active">
+                    <div class="stage-num">04</div>
+                    <div class="stage-icon">🐳</div>
+                    <h4>Build Image</h4>
+                    <p>Multi-stage Dockerfile packaging lean Alpine JRE image.</p>
+                    <span class="stage-tag">Docker</span>
+                </div>
+                <div class="stage-arrow">➔</div>
+
+                <div class="stage-card active">
+                    <div class="stage-num">05</div>
+                    <div class="stage-icon">🚀</div>
+                    <h4>Deploy</h4>
+                    <p>Continuous delivery to local / VM / container registry.</p>
+                    <span class="stage-tag">GitHub Actions</span>
+                </div>
+                <div class="stage-arrow">➔</div>
+
+                <div class="stage-card active">
+                    <div class="stage-num">06</div>
+                    <div class="stage-icon">✅</div>
+                    <h4>Verify</h4>
+                    <p>Automated smoke tests, Actuator health probes &amp; API checks.</p>
+                    <span class="stage-tag">Health Check</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Health & Smoke Tester Card -->
+        <section class="section">
+            <div class="section-header">
+                <h3>Post-Deployment Availability &amp; Health Probe</h3>
+                <p>Live verification against backend REST endpoints (Slide 07 requirements).</p>
+            </div>
+            <div class="interactive-grid">
+                <div class="card tester-card">
+                    <h4>Trigger Live Health Verification</h4>
+                    <p class="text-muted">Perform on-demand HTTP health check across application endpoints.</p>
+                    <div class="btn-group">
+                        <button id="btn-check-health" class="btn btn-primary">Check /api/health</button>
+                        <button id="btn-check-ping" class="btn btn-secondary">Check /api/health/ping</button>
+                        <button id="btn-check-actuator" class="btn btn-secondary">Check /actuator/health</button>
+                    </div>
+                    <div class="probe-result-box">
+                        <div class="probe-header">
+                            <span id="probe-target">Endpoint: /api/health</span>
+                            <span id="probe-time" class="badge badge-secondary">0 ms</span>
+                        </div>
+                        <pre id="probe-output" class="code-block">Click a button above to run health verification...</pre>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <h4>Deployment Environment Details</h4>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <span class="info-label">OS Name &amp; Arch</span>
+                            <span class="info-value" id="info-os">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Available Processors</span>
+                            <span class="info-value" id="info-cpus">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">JVM Memory (Free / Total)</span>
+                            <span class="info-value" id="info-memory">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Database Type</span>
+                            <span class="info-value" id="info-db">H2 In-Memory (Dev) / MySQL (Prod)</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Prometheus Metrics</span>
+                            <span class="info-value"><a href="/actuator/prometheus" target="_blank">/actuator/prometheus</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Milestones / Task Manager Section -->
+        <section class="section">
+            <div class="section-header">
+                <div class="header-split">
+                    <div>
+                        <h3>DevOps Implementation Deliverables &amp; Tasks</h3>
+                        <p>Managed via Spring Data JPA REST API (Slide 08 deliverables tracking).</p>
+                    </div>
+                    <button id="btn-open-modal" class="btn btn-primary">+ Add New Task</button>
+                </div>
+            </div>
+
+            <!-- Task Statistics Bar -->
+            <div class="stats-row">
+                <div class="stat-pill"><span class="stat-count" id="stat-total">0</span> Total Tasks</div>
+                <div class="stat-pill text-success"><span class="stat-count" id="stat-completed">0</span> Completed</div>
+                <div class="stat-pill text-warning"><span class="stat-count" id="stat-in-progress">0</span> In Progress</div>
+                <div class="stat-pill text-danger"><span class="stat-count" id="stat-pending">0</span> Pending</div>
+            </div>
+
+            <!-- Tasks Table / Cards -->
+            <div class="table-container card">
+                <table class="tasks-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Milestone / Task</th>
+                            <th>Description</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tasks-tbody">
+                        <tr>
+                            <td colspan="6" class="text-center">Loading tasks from REST API...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Adding/Editing Task -->
+    <div id="task-modal" class="modal">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <h4 id="modal-title">Add DevOps Task</h4>
+                <button id="btn-close-modal" class="close-btn">&times;</button>
+            </div>
+            <form id="task-form">
+                <input type="hidden" id="task-id">
+                <div class="form-group">
+                    <label for="task-title">Title *</label>
+                    <input type="text" id="task-title" required placeholder="e.g. Configure Prometheus monitoring">
+                </div>
+                <div class="form-group">
+                    <label for="task-desc">Description</label>
+                    <textarea id="task-desc" rows="3" placeholder="Details about this pipeline milestone"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-priority">Priority</label>
+                        <select id="task-priority">
+                            <option value="LOW">LOW</option>
+                            <option value="MEDIUM" selected>MEDIUM</option>
+                            <option value="HIGH">HIGH</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-status">Status</label>
+                        <select id="task-status">
+                            <option value="PENDING" selected>PENDING</option>
+                            <option value="IN_PROGRESS">IN_PROGRESS</option>
+                            <option value="COMPLETED">COMPLETED</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="btn-cancel-modal" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>DevOps Mini Project &bull; Automated CI/CD Pipeline for Web Application Deployment</p>
+            <p class="text-muted">Built with Java 21, Spring Boot 3, Docker, and GitHub Actions</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
